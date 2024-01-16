@@ -14,7 +14,7 @@ import com.macedo.swplanetapi.domain.Planet;
 public class PlanetController {
 
     @Autowired
-    PlanetService PlanetService;
+    PlanetService planetService;
 
     @PostMapping
     public ResponseEntity<Planet> create(@RequestBody Planet planet) {
