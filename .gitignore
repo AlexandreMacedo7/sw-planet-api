@@ -31,3 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
+
+# .gitignore
+
+# Ignorar todos os arquivos application*.properties
+application*.properties
