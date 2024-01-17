@@ -1,5 +1,6 @@
 package com.macedo.swplanetapi.domain;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.hibernate.annotations.IdGeneratorType;
 
 import jakarta.persistence.Entity;
@@ -17,8 +18,14 @@ public class Planet {
     private Long id;
     
     private String name;
-    private String climente;
+    private String climate;
     private String terrain;
+
+    public Planet(String name, String climate, String terrain){
+        this.name = name;
+        this.climate = climate;
+        this.terrain = terrain;
+    }
 
     public Long getId() {
         return id;
@@ -37,11 +44,11 @@ public class Planet {
     }
 
     public String getClimente() {
-        return climente;
+        return climate;
     }
 
-    public void setClimente(String climente) {
-        this.climente = climente;
+    public void setClimente(String climate) {
+        this.climate = climate;
     }
 
     public String getTerrain() {
@@ -52,4 +59,8 @@ public class Planet {
         this.terrain = terrain;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return EqualsBuilder.reflectionEquals(obj,this);
+    }
 }
