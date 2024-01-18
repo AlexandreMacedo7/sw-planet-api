@@ -4,13 +4,17 @@ import static com.macedo.swplanetapi.common.PlanetConstants.PLANET;
 import static com.macedo.swplanetapi.common.PlanetConstants.INVALID_PLANET;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.dao.DataIntegrityViolationException;
 
 //@SpringBootTest(classes = PlanetService.class)
 @ExtendWith(MockitoExtension.class)
@@ -53,4 +57,17 @@ public class PlanetServiceTest {
 
     }
     
+    @Test
+    public void getPlanet_ByExistingId_ReturnsPlanet(){
+        when(planetRepository.findById(anyLong())).thenReturn(Optional.of(PLANET));
+
+        Optional<Planet> sut = planetService.get(1l);
+
+        assertThat(sut).isNotEmpty();
+        assertThat(sut.get()).isEqualTo(PLANET);
+    }
+    
+
+    @Test
+    public void getPlanet_ByUnexistingId_ReturnsPlanet(){}
 }
