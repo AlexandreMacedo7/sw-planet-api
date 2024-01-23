@@ -1,0 +1,12 @@
+{
+	"folders": [
+		{
+			"name": "sw-planet-api",
+			"path": "../../../../../../.."
+		}
+	],
+	"settings": {
+		"java.compile.nullAnalysis.mode": "automatic",
+		"java.configuration.updateBuildConfiguration": "automatic"
+	}
+}
