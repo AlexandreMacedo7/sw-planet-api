@@ -6,6 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -137,5 +138,13 @@ public class PlanetServiceTest {
     @Test
     public void removePlanet_WithExistingId_doesNotThrowAnyException(){
         assertThatCode(()-> planetService.remove(1L)).doesNotThrowAnyException();
+    }
+
+    @Test
+    public void removePlanet_WhithUexistingId_ThrowsException(){
+
+        doThrow(new RuntimeException()).when(planetRepository).deleteById(99L);
+
+        assertThatThrownBy(()-> planetService.remove(99l)).isInstanceOf(RuntimeException.class);
     }
 }
