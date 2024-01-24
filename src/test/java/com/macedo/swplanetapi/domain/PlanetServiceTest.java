@@ -1,11 +1,11 @@
 package com.macedo.swplanetapi.domain;
 
-import static com.macedo.swplanetapi.common.PlanetConstants.PLANET;
 import static com.macedo.swplanetapi.common.PlanetConstants.INVALID_PLANET;
+import static com.macedo.swplanetapi.common.PlanetConstants.PLANET;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Example;
 
 //@SpringBootTest(classes = PlanetService.class)
@@ -133,5 +132,10 @@ public class PlanetServiceTest {
         List<Planet> sut = planetService.list(PLANET.getTerrain(), PLANET.getClimente());
 
         assertThat(sut).isEmpty();
+    }
+
+    @Test
+    public void removePlanet_WithExistingId_doesNotThrowAnyException(){
+        assertThatCode(()-> planetService.remove(1L)).doesNotThrowAnyException();
     }
 }
