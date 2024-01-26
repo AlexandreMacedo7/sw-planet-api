@@ -1,25 +1,23 @@
 package com.macedo.swplanetapi.domain;
 
-import static com.macedo.swplanetapi.common.PlanetConstants.INVALID_PLANET;
-import static com.macedo.swplanetapi.common.PlanetConstants.PLANET;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Example;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static com.macedo.swplanetapi.common.PlanetConstants.INVALID_PLANET;
+import static com.macedo.swplanetapi.common.PlanetConstants.PLANET;
+import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 //@SpringBootTest(classes = PlanetService.class)
 @ExtendWith(MockitoExtension.class)
@@ -126,7 +124,7 @@ public class PlanetServiceTest {
     }
 
     @Test
-    public void listPlanets_ReturnsNoPlanets(){
+    public void listPlanets_ReturnsNoPlanets() {
 
         when(planetRepository.findAll(any())).thenReturn(Collections.emptyList());
 
@@ -136,15 +134,15 @@ public class PlanetServiceTest {
     }
 
     @Test
-    public void removePlanet_WithExistingId_doesNotThrowAnyException(){
-        assertThatCode(()-> planetService.remove(1L)).doesNotThrowAnyException();
+    public void removePlanet_WithExistingId_doesNotThrowAnyException() {
+        assertThatCode(() -> planetService.remove(1L)).doesNotThrowAnyException();
     }
 
     @Test
-    public void removePlanet_WhithUexistingId_ThrowsException(){
+    public void removePlanet_WhithUexistingId_ThrowsException() {
 
         doThrow(new RuntimeException()).when(planetRepository).deleteById(99L);
 
-        assertThatThrownBy(()-> planetService.remove(99l)).isInstanceOf(RuntimeException.class);
+        assertThatThrownBy(() -> planetService.remove(99l)).isInstanceOf(RuntimeException.class);
     }
 }
