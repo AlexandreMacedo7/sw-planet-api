@@ -1,23 +1,25 @@
 package com.macedo.swplanetapi.domain;
 
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Example;
+import static com.macedo.swplanetapi.common.PlanetConstants.INVALID_PLANET;
+import static com.macedo.swplanetapi.common.PlanetConstants.PLANET;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static com.macedo.swplanetapi.common.PlanetConstants.INVALID_PLANET;
-import static com.macedo.swplanetapi.common.PlanetConstants.PLANET;
-import static org.assertj.core.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Example;
 
 //@SpringBootTest(classes = PlanetService.class)
 @ExtendWith(MockitoExtension.class)
