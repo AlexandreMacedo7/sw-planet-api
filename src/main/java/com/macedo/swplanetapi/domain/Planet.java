@@ -1,8 +1,8 @@
 package com.macedo.swplanetapi.domain;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.hibernate.annotations.IdGeneratorType;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -17,8 +17,11 @@ public class Planet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
+    @Column(nullable = false)
     private String climate;
+    @Column(nullable = false)
     private String terrain;
 
     public Planet() {
