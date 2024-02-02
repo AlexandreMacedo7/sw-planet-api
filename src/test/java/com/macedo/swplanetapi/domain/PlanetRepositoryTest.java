@@ -2,6 +2,7 @@ package com.macedo.swplanetapi.domain;
 
 import static com.macedo.swplanetapi.common.PlanetConstants.PLANET;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ public class PlanetRepositoryTest {
     private TestEntityManager testEntityManager;
 
     @Test
-    public void createPlanet_WithInvalidData_ReturnsPlanet(){
+    public void createPlanet_WithValidData_ReturnsPlanet(){
         Planet planet = planetRepository.save(PLANET);
 
         Planet sut = testEntityManager.find(Planet.class, planet.getId());
@@ -32,5 +33,15 @@ public class PlanetRepositoryTest {
         assertThat(sut.getClimente()).isEqualTo(PLANET.getClimente());
         assertThat(sut.getTerrain()).isEqualTo(PLANET.getTerrain());
     
+    }
+
+    @Test
+    public void createPlanet_WithInvalidData_ThrowsException(){
+
+        Planet emptyPlanet = new Planet();
+        Planet invalidPlanet = new Planet("","","");
+
+        assertThatThrownBy(()-> planetRepository.save(emptyPlanet));
+        assertThatThrownBy(()-> planetRepository.save(invalidPlanet));
     }
 }
