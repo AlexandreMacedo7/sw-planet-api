@@ -50,10 +50,11 @@ public class PlanetRepositoryTest {
     @Test
     public void createPlanet_WithExistingName_ThrowsException() {
 
-        /*É necessário setar o id, porque para o método save que salva e atualiza, ele confere o id, se existir um, ele apenas atualiza
+        /*É necessário setar o id, para o método "save" salva e atualiza dados, ele confere o id, se existir um, ele apenas atualiza
          * nesse caso, é preciso colocá-lo como nulo, para poder haver uma nova conferencia de dados.
          * 
-         * Utiliza-se o detach, para tirar o gerenciamento do Entity Manager sobre a entidade
+         * Utiliza-se o detach, para tirar o gerenciamento do Entity Manager sobre a entidade, do contrário, o 
+         * Entity Manager, saberá que aquele objeto esta salvo no banco de dados
          */
 
         Planet planet = testEntityManager.persistAndFlush(PLANET);
