@@ -6,6 +6,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import com.macedo.swplanetapi.domain.Planet;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -30,15 +31,25 @@ public class PlanetControllerTest {
 
     @Test
     public void createPlanet_WithValidData_ReturnsCreated() throws Exception {
+        var planetJson = objectMapper.writeValueAsString(PLANET); //Utilizado para transformar objetos em strings Json
 
         when(planetService.create(PLANET)).thenReturn(PLANET);
 
-        mockMvc
-                .perform(
-                        post("/planets").content(objectMapper.writeValueAsString(PLANET))
-                                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$").value(PLANET));
-
+        mockMvc.perform(post("/planets").content(planetJson).contentType(MediaType.APPLICATION_JSON))//Informa que é um json sendo passado
+                .andExpect(status().isCreated())//Verficia status
+                .andExpect(jsonPath("$").value(PLANET));//Verifica o objeto passado na raiz do Json
     }
+
+    @Test
+    public void createPlanet_WithInvalidData_ReturnsBadRequest() throws Exception {
+        var emptyPlanet = objectMapper.writeValueAsString(new Planet());
+        var invalidPlanet = objectMapper.writeValueAsString(new Planet("", "", ""));
+
+        mockMvc.perform(post("/planets").content(emptyPlanet).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnprocessableEntity());
+
+        mockMvc.perform(post("/planets").content(invalidPlanet).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isUnprocessableEntity());
+    }
+
 }
