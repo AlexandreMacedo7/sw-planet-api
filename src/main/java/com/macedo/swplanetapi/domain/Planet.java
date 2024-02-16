@@ -58,11 +58,11 @@ public class Planet {
         this.name = name;
     }
 
-    public String getClimente() {
+    public String getClimate() {
         return climate;
     }
 
-    public void setClimente(String climate) {
+    public void setClimate(String climate) {
         this.climate = climate;
     }
 

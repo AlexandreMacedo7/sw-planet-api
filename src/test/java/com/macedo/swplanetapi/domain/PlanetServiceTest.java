@@ -113,11 +113,11 @@ public class PlanetServiceTest {
                 add(PLANET);
             }
         };
-        Example<Planet> query = QueryBuilder.makeQuery(new Planet(PLANET.getClimente(), PLANET.getTerrain()));
+        Example<Planet> query = QueryBuilder.makeQuery(new Planet(PLANET.getClimate(), PLANET.getTerrain()));
         when(planetRepository.findAll(query)).thenReturn(planets);
 
 
-        List<Planet> sut = planetService.list(PLANET.getTerrain(), PLANET.getClimente());
+        List<Planet> sut = planetService.list(PLANET.getTerrain(), PLANET.getClimate());
 
 
         assertThat(sut).isNotEmpty();
@@ -130,7 +130,7 @@ public class PlanetServiceTest {
 
         when(planetRepository.findAll(any())).thenReturn(Collections.emptyList());
 
-        List<Planet> sut = planetService.list(PLANET.getTerrain(), PLANET.getClimente());
+        List<Planet> sut = planetService.list(PLANET.getTerrain(), PLANET.getClimate());
 
         assertThat(sut).isEmpty();
     }

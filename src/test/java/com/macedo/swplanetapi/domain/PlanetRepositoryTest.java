@@ -32,7 +32,7 @@ public class PlanetRepositoryTest {
         // A constante não possui id, é preciso validar cada propriedade
 
         assertThat(sut.getName()).isEqualTo(PLANET.getName());
-        assertThat(sut.getClimente()).isEqualTo(PLANET.getClimente());
+        assertThat(sut.getClimate()).isEqualTo(PLANET.getClimate());
         assertThat(sut.getTerrain()).isEqualTo(PLANET.getTerrain());
 
     }
