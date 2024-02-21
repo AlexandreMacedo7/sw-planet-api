@@ -64,4 +64,9 @@ public class PlanetControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isConflict());
     }
 
+    @Test
+    public void getPlanet_ByExistingId_ReturnsPlanet()throws Exception{
+
+    }
+
 }

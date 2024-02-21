@@ -4,6 +4,9 @@ import static com.macedo.swplanetapi.common.PlanetConstants.PLANET;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.when;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,5 +66,14 @@ public class PlanetRepositoryTest {
 
         assertThatThrownBy(() -> planetRepository.save(planet)).isInstanceOf(RuntimeException.class);
 
+    }
+
+    @Test
+    public void getPlanet_ByExistingId_ReturnsPlanet(){
+        
+        Long id = 1L;
+        Planet sut = testEntityManager.find(Planet.class, id);
+        
+        assertThat(sut).isNotNull();
     }
 }
