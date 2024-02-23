@@ -90,4 +90,15 @@ public class PlanetRepositoryTest {
  
         assertThat(planetOpt).isEmpty();
     }
+
+    @Test
+    public void getPlanet_ByExistingName_ReturnsPlanet(){
+
+        Planet planet = testEntityManager.persistAndFlush(PLANET);
+
+        Optional<Planet> planetOptional = planetRepository.findByName(planet.getName());
+
+        assertThat(planetOptional).isNotEmpty();
+        assertThat(planetOptional.get()).isEqualTo(planet);
+    }
 }
