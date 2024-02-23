@@ -101,4 +101,11 @@ public class PlanetRepositoryTest {
         assertThat(planetOptional).isNotEmpty();
         assertThat(planetOptional.get()).isEqualTo(planet);
     }
+    @Test
+    public void getPlanet_ByUnexistingName_ReturnsPlanet(){
+
+        Optional<Planet> planetOptional = planetRepository.findByName("name");
+
+        assertThat(planetOptional).isEmpty();    
+    }
 }
