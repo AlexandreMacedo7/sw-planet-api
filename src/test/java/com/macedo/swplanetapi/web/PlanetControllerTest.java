@@ -3,9 +3,12 @@ package com.macedo.swplanetapi.web;
 import static com.macedo.swplanetapi.common.PlanetConstants.PLANET;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+import java.util.Optional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.macedo.swplanetapi.domain.Planet;
@@ -66,7 +69,11 @@ public class PlanetControllerTest {
 
     @Test
     public void getPlanet_ByExistingId_ReturnsPlanet()throws Exception{
-
+        when(planetService.get(1L)).thenReturn(Optional.of(PLANET));
+        mockMvc.perform(
+                get("/planets"))
+                .andExpect(status().isOk())//Verficia status
+                .andExpect(jsonPath("$").value(PLANET));
     }
 
 }
