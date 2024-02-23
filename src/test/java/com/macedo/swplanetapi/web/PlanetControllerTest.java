@@ -87,7 +87,7 @@ public class PlanetControllerTest {
         when(planetService.getByName("name")).thenReturn(Optional.of(PLANET));
 
         mockMvc.perform(
-                get("/planets/name/name"))
+                get("/planets/name/"+PLANET.getName()))
         .andExpect(status().isOk())
         .andExpect(jsonPath("$").value(PLANET));
     }
