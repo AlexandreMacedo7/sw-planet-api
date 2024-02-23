@@ -93,8 +93,9 @@ public class PlanetControllerTest {
     }
 
     @Test
-    public void getPlanet_ByUnexistingName_ReturnsPlanet(){
-   
+    public void getPlanet_ByUnexistingName_ReturnsPlanet() throws Exception{
+        mockMvc.perform(get("/planets/name/name"))
+        .andExpect(status().isNotFound());
     }
 
 }
