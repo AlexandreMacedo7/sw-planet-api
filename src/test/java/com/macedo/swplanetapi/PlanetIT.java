@@ -4,13 +4,12 @@ import static com.macedo.swplanetapi.common.PlanetConstants.PLANET;
 import static com.macedo.swplanetapi.common.PlanetConstants.TATOOINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.List;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -42,7 +41,7 @@ public class PlanetIT {
     }
 
     @Test
-    public void getPlanet_ReturnsPlanet(){
+    public void getPlanet_ReturnsPlanet() {
 
         ResponseEntity<Planet> sut = restTemplate.getForEntity("/planets/1", Planet.class);
 
@@ -51,16 +50,17 @@ public class PlanetIT {
     }
 
     @Test
-    public void getPlanetByName_ReturnsPlanet(){
+    public void getPlanetByName_ReturnsPlanet() {
 
-        ResponseEntity<Planet> response = restTemplate.getForEntity("/planets/name/" + TATOOINE.getName(), Planet.class);
+        ResponseEntity<Planet> response = restTemplate.getForEntity("/planets/name/" + TATOOINE.getName(),
+                Planet.class);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isEqualTo(TATOOINE);
     }
 
     @Test
-    public void listPlanets_ReturnsAllPlanets(){
+    public void listPlanets_ReturnsAllPlanets() {
 
         ResponseEntity<Planet[]> sut = restTemplate.getForEntity("/planets", Planet[].class);
 
@@ -71,9 +71,10 @@ public class PlanetIT {
     }
 
     @Test
-    public void listPlanets_ByClimate_ReturnsAllPlanets(){
+    public void listPlanets_ByClimate_ReturnsAllPlanets() {
 
-        ResponseEntity<Planet[]> sut = restTemplate.getForEntity("/planets?climate=" + TATOOINE.getClimate(), Planet[].class);
+        ResponseEntity<Planet[]> sut = restTemplate.getForEntity("/planets?climate=" + TATOOINE.getClimate(),
+                Planet[].class);
 
         assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(sut.getBody()).hasSize(1);
@@ -82,9 +83,10 @@ public class PlanetIT {
     }
 
     @Test
-    public void listPlanets_ByTerrain_ReturnsAllPlanets(){
+    public void listPlanets_ByTerrain_ReturnsAllPlanets() {
 
-        ResponseEntity<Planet[]> sut = restTemplate.getForEntity("/planets?terrain=" + TATOOINE.getTerrain(), Planet[].class);
+        ResponseEntity<Planet[]> sut = restTemplate.getForEntity("/planets?terrain=" + TATOOINE.getTerrain(),
+                Planet[].class);
 
         assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(sut.getBody()).hasSize(1);
@@ -92,4 +94,12 @@ public class PlanetIT {
 
     }
 
+    @Test
+    public void removePlanets_ReturnsNoContent() {
+
+        ResponseEntity<Void> sut = restTemplate.exchange("/planets/" + TATOOINE.getId(), HttpMethod.DELETE, null,
+                void.class);
+
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
+    }
 }
