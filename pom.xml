@@ -90,7 +90,7 @@
 					</execution>
 				</executions>
 			</plugin>
-			
+
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
@@ -113,6 +113,27 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>1.8.0</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>0.14</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<targetTests>
+						<param>com.macedo.swplanetapi.*Test</param>
+					</targetTests>
+					<excludedClasses>
+						<param>com.macedo.swplanetapi.domain.Planet</param>
+					</excludedClasses>
+				</configuration>
 			</plugin>
 
 		</plugins>
