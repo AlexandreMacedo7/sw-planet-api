@@ -84,4 +84,15 @@ public class Planet {
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(obj, this);
     }
+
+    @Override
+    public String toString() {
+        return "{" +
+            " id='" + getId() + "'" +
+            ", name='" + getName() + "'" +
+            ", climate='" + getClimate() + "'" +
+            ", terrain='" + getTerrain() + "'" +
+            "}";
+    }
+
 }
