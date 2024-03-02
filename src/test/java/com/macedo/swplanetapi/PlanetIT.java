@@ -4,6 +4,8 @@ import static com.macedo.swplanetapi.common.PlanetConstants.PLANET;
 import static com.macedo.swplanetapi.common.PlanetConstants.TATOOINE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.util.List;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -56,4 +58,16 @@ public class PlanetIT {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(response.getBody()).isEqualTo(TATOOINE);
     }
+
+    @Test
+    public void listPlanets_ReturnsAllPlanets(){
+
+        ResponseEntity<Planet[]> sut = restTemplate.getForEntity("/planets", Planet[].class);
+
+        assertThat(sut.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(sut.getBody()).hasSize(3);
+        assertThat(sut.getBody()[0]).isEqualTo(TATOOINE);
+
+    }
+
 }
