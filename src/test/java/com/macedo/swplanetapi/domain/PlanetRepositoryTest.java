@@ -154,7 +154,7 @@ public class PlanetRepositoryTest {
         assertThat(removedPlanet).isNull();
     }
 
-    @Test //teste não valido para versão acima de Spring Boot 2.7.0
+    //@Test //teste não valido para versão acima de Spring Boot 2.7.0
     public void removePlanet_WithUnexistingId_ThrowsException() {
         assertThatThrownBy(() -> planetRepository.deleteById(1L)).isInstanceOf(EmptyResultDataAccessException.class);
     }
