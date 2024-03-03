@@ -7,9 +7,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
@@ -49,14 +53,32 @@ public class PlanetRepositoryTest {
 
     }
 
-    @Test
-    public void createPlanet_WithInvalidData_ThrowsException() {
+    @ParameterizedTest
+    @MethodSource("providesInvalidPlanets")
+    public void createPlanet_WithInvalidData_ThrowsException(Planet planet) {
 
-        Planet emptyPlanet = new Planet();
-        Planet invalidPlanet = new Planet("", "", "");
+        assertThatThrownBy(() -> planetRepository.save(planet)).isInstanceOf(RuntimeException.class);
+    }
 
-        assertThatThrownBy(() -> planetRepository.save(emptyPlanet)).isInstanceOf(RuntimeException.class);
-        assertThatThrownBy(() -> planetRepository.save(invalidPlanet)).isInstanceOf(RuntimeException.class);
+    private static Stream<Arguments> providesInvalidPlanets(){
+        return Stream.of(
+        Arguments.of(new Planet("", "", "")),
+        Arguments.of(new Planet("", "Description", "Terrain")),
+        Arguments.of(new Planet("Name", "", "Terrain")),
+        Arguments.of(new Planet("Name", "Description", "")),
+        
+        // Argumentos com valores nulos
+        Arguments.of(new Planet(null, null, null)),
+        Arguments.of(new Planet(null, "Description", "Terrain")),
+        Arguments.of(new Planet("Name", null, "Terrain")),
+        Arguments.of(new Planet("Name", "Description", null)),
+        
+        // Argumentos com valores inválidos
+        Arguments.of(new Planet(" ", "Description", "Terrain")), // Espaço em branco no nome
+        Arguments.of(new Planet("Name", " ", "Terrain")), // Espaço em branco na descrição
+        Arguments.of(new Planet("Name", "Description", " ")) // Espaço em branco no terreno
+    
+        );
     }
 
     @Test
